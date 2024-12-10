@@ -9,7 +9,7 @@ class StringCalculator
     end
     nums.map!(&:to_i)
     negatives = nums.select { |n| n < 0 }
-    raise "negative numbers not allowed: #{negatives.first}" if negatives.any?
+    raise "negative numbers not allowed: #{negatives.join(', ')}" if negatives.any?
     nums.sum
   end
 end
