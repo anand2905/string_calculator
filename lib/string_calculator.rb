@@ -1,14 +1,16 @@
 class StringCalculator
   def self.add(numbers)
     return 0 if numbers.empty?
-    return numbers.to_i if numbers.index(',').nil? && numbers.index('\n').nil?
-
-    if numbers.start_with?('//')
+    nums = if numbers.start_with?('//')
       delimiter = numbers[2]
-      numbers = numbers.split('\n')[1]
-      numbers.split(delimiter).map(&:to_i).sum
+      numbers.split('\n')[1].split(delimiter)
     else
-      numbers.gsub('\n', ',').split(',').map(&:to_i).sum
+      numbers.gsub('\n', ',').split(',')
     end
+    nums.map!(&:to_i)
+    negatives = nums.select { |n| n < 0 }
+    raise "negative numbers not allowed: #{negatives.first}" if negatives.any?
+    nums.sum
   end
 end
+
